@@ -82,7 +82,7 @@ class _FundWalletScreenState extends State<FundWalletScreen> {
                     ),
                   ),
                   Text(
-                    "₦5,000",
+                    "K5,000",
                     style: TextStyle(
                       fontSize: value15,
                       color: Colors.red,

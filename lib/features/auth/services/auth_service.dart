@@ -382,7 +382,7 @@ class AuthService {
               }),
             )
             .timeout(const Duration(seconds: 25));
-
+        print("here ${res.body} $uri $username");
         Navigator.of(context, rootNavigator: true).pop('dialog');
 
         statusCodeHandler(

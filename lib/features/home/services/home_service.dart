@@ -11,6 +11,7 @@ import 'package:pay_mobile_app/core/utils/assets.dart';
 import 'package:pay_mobile_app/core/utils/global_constants.dart';
 import 'package:pay_mobile_app/core/utils/utils.dart';
 import 'package:pay_mobile_app/features/auth/screens/create_login_pin_screen.dart';
+import 'package:pay_mobile_app/features/auth/screens/login_screen.dart';
 import 'package:pay_mobile_app/features/transactions/models/transactions.dart';
 import 'package:pay_mobile_app/features/transactions/models/transfer.dart';
 import 'package:pay_mobile_app/features/auth/providers/user_provider.dart';
@@ -137,7 +138,7 @@ class HomeService {
                 context: context,
                 title: "Transfer successful",
                 message:
-                    "You have successfully sent ₦$amount to $recipientsUsername",
+                    "You have successfully sent K$amount to $recipientsUsername",
                 onTap: () {
                   Navigator.of(context, rootNavigator: true).pop('dialog');
                   // showMaterialBanner(
@@ -235,7 +236,12 @@ class HomeService {
               screenHeight,
             ),
           ),
-          builder: (context) => const CreateLoginPinScreen(),
+          builder: Provider.of<UserProvider>(context, listen: false)
+                  .user
+                  .username
+                  .isEmpty
+              ? (context) => const LoginScreen()
+              : (context) => const CreateLoginPinScreen(),
         );
       }
     });
@@ -321,9 +327,9 @@ class HomeService {
               context: context,
               image: notificationsLogo,
               description: "Credit Successful",
-              amount: "₦$amount",
+              amount: "K$amount",
               amountColor: Colors.green,
-              shortDesc: "Added ₦$amount to balance",
+              shortDesc: "Added K$amount to balance",
               isFromTo: false,
             );
             Navigator.pushNamedAndRemoveUntil(
@@ -372,7 +378,7 @@ class HomeService {
                 context: context,
                 image: "assets/images/full_logo.png",
                 description: "Credit Successful",
-                amount: "+₦${jsonDecode(res.body)["amount"]}",
+                amount: "+K${jsonDecode(res.body)["amount"]}",
                 amountColor: Colors.green,
                 shortDesc: "${jsonDecode(res.body)["sendersName"]}",
                 prefix: "From ",

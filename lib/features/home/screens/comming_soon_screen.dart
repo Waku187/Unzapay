@@ -23,7 +23,7 @@ class CommingSoonScreen extends StatelessWidget {
             ),
             HeightSpace(heightValue20),
             Text(
-              "Comming Soon",
+              "Comming Soon Wechipondo",
               style: TextStyle(
                 fontSize: value25,
                 fontWeight: FontWeight.bold,
@@ -38,7 +38,7 @@ class CommingSoonScreen extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: Text(
-                    "Coming Soon",
+                    "Comming Soon Wechipondo",
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: heightValue35,
@@ -57,7 +57,7 @@ class CommingSoonScreen extends StatelessWidget {
             ),
             HeightSpace(heightValue40),
             Text(
-              "This feature is Comming Soon. Stay tuned",
+              "This feature is Comming Soon wechipondo. Stay tuned",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: value25,

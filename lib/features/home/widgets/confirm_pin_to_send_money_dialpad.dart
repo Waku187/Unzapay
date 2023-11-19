@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:local_auth/error_codes.dart' as auth_error;
 import 'package:pay_mobile_app/core/utils/assets.dart';
 import 'package:pay_mobile_app/core/utils/color_constants.dart';
 import 'package:pay_mobile_app/widgets/height_space.dart';
@@ -16,6 +18,7 @@ import 'package:pay_mobile_app/widgets/pin_input_field.dart';
 
 class ConfirmPinToSendMoneyDialPad extends StatefulWidget {
   final VoidCallback onSuccess;
+
   const ConfirmPinToSendMoneyDialPad({
     Key? key,
     required this.onSuccess,
@@ -29,8 +32,16 @@ class ConfirmPinToSendMoneyDialPad extends StatefulWidget {
 class _ConfirmPinToSendMoneyDialPadState
     extends State<ConfirmPinToSendMoneyDialPad> {
   final HomeService homeService = HomeService();
+  final LocalAuthentication _localAuthentication = LocalAuthentication();
+
   var selectedindex = 0;
   String pin = '';
+
+  @override
+  void initState() {
+    super.initState();
+    confirmTransactionUsingPinOrBiometrics();
+  }
 
   addDigit(int digit) {
     if (pin.length > 3) {
@@ -41,7 +52,7 @@ class _ConfirmPinToSendMoneyDialPadState
       print('pin is $pin');
       selectedindex = pin.length;
       if (pin.length > 3) {
-        confirmTransactionUsingPin();
+        confirmTransactionUsingPinOrBiometrics();
       }
     });
   }
@@ -56,18 +67,62 @@ class _ConfirmPinToSendMoneyDialPadState
     });
   }
 
-  void confirmTransactionUsingPin() {
+  /* Future<void> confirmTransactionUsingPinOrBiometrics() async {
+    if (await _authenticateWithBiometrics()) {
+      // Biometric authentication successful, proceed with your logic.
+      print('Biometric authentication successful');
+      _onSuccess();
+    } else {
+      // Fallback to PIN authentication.
+      _authenticateWithPin();
+    }
+  } */
+
+  Future<void> confirmTransactionUsingPinOrBiometrics() async {
+    if (await _localAuthentication.canCheckBiometrics|| await _localAuthentication.isDeviceSupported()) {
+      // Biometric authentication successful, proceed with your logic.
+      try {
+      final bool bio =  await _localAuthentication.authenticate(
+        localizedReason: 'Authenticate to access your finance system',
+      );
+      if (bio) {
+        _onSuccess();
+      }
+    } catch (e) {
+      print('Error during biometric authentication: $e');
+    }
+      
+    } else {
+      // Fallback to PIN authentication.
+      _authenticateWithPin();
+    }
+  }
+
+  /* Future<bool> _authenticateWithBiometrics() async {
+    try {
+      return await _localAuthentication.authenticate(
+        localizedReason: 'Authenticate to access your finance system',
+      );
+    } catch (e) {
+      print('Error during biometric authentication: $e');
+      return false;
+    }
+  } */
+
+  void _authenticateWithPin() {
     final username =
         Provider.of<UserProvider>(context, listen: false).user.username;
     homeService.confirmPinBeforeTransfer(
       context: context,
       pin: pin,
       username: username,
-      onSuccess: () {
-        Navigator.pop(context);
-        widget.onSuccess();
-      },
+      onSuccess: _onSuccess,
     );
+  }
+
+  void _onSuccess() {
+    Navigator.pop(context);
+    widget.onSuccess();
   }
 
   @override
@@ -169,7 +224,7 @@ class _ConfirmPinToSendMoneyDialPadState
                   children: [
                     TextButton(
                       style: ButtonStyle(
-                        fixedSize: MaterialStatePropertyAll(
+                        fixedSize: MaterialStateProperty.all(
                           Size(heightValue75, heightValue75),
                         ),
                       ),
@@ -182,9 +237,11 @@ class _ConfirmPinToSendMoneyDialPadState
                       onTap: () => addDigit(0),
                       numberText: '0',
                     ),
+
                     TextButton(
+                      
                       style: ButtonStyle(
-                        fixedSize: MaterialStatePropertyAll(
+                        fixedSize: MaterialStateProperty.all(
                           Size(heightValue75, heightValue75),
                         ),
                       ),
@@ -203,54 +260,55 @@ class _ConfirmPinToSendMoneyDialPadState
                 TextButton(
                   onPressed: () {
                     showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                              backgroundColor: greyScale850,
-                              surfaceTintColor: greyScale850,
-                              icon: Image.asset(
-                                infoCircle,
-                                height: value100,
-                                width: value100,
-                                color: whiteColor,
-                              ),
-                              title: Text(
-                                "Caution",
-                                style: TextStyle(
-                                  fontSize: heightValue20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              content: Text(
-                                "Are you sure you want to cancel the transaction",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: heightValue15,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                              actions: <Widget>[
-                                CustomButton(
-                                  buttonText: "Yes",
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                  },
-                                  buttonColor: primaryAppColor,
-                                  buttonTextColor: secondaryAppColor,
-                                ),
-                                SizedBox(
-                                  height: heightValue10,
-                                ),
-                                CustomButton(
-                                  buttonText: "No",
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  buttonColor: primaryAppColor,
-                                  buttonTextColor: secondaryAppColor,
-                                )
-                              ],
-                            ));
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        backgroundColor: greyScale850,
+                        surfaceTintColor: greyScale850,
+                        icon: Image.asset(
+                          infoCircle,
+                          height: value100,
+                          width: value100,
+                          color: whiteColor,
+                        ),
+                        title: Text(
+                          "Caution",
+                          style: TextStyle(
+                            fontSize: heightValue20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        content: Text(
+                          "Are you sure you want to cancel the transaction",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: heightValue15,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        actions: <Widget>[
+                          CustomButton(
+                            buttonText: "Yes",
+                            onTap: () {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                            buttonColor: primaryAppColor,
+                            buttonTextColor: secondaryAppColor,
+                          ),
+                          SizedBox(
+                            height: heightValue10,
+                          ),
+                          CustomButton(
+                            buttonText: "No",
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            buttonColor: primaryAppColor,
+                            buttonTextColor: secondaryAppColor,
+                          )
+                        ],
+                      ),
+                    );
                   },
                   child: Text(
                     "Cancel",

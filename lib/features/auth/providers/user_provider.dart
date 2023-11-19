@@ -17,6 +17,19 @@ class UserProvider extends ChangeNotifier {
   //creating getter for user
   User get user => _user;
 
+  void clear() {
+    _user = User(
+        fullname: '',
+        username: '',
+        email: '',
+        password: '',
+        token: '',
+        type: '',
+        id: '',
+        pin: '',
+        isVerified: false);
+  }
+
   void setUser(String user) {
     //data fromjson coming from models/user.dart
     _user = User.fromJson(user);

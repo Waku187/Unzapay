@@ -148,20 +148,25 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Row(
                                 children: [
-                                  CircleAvatar(
-                                    radius: heightValue25,
-                                    // backgroundColor: whiteColor,
-                                    backgroundImage:
-                                        const AssetImage(gradientCircle),
-                                    child: Center(
-                                        child: Text(
-                                      user.fullname[0],
-                                      style: TextStyle(
-                                          color: secondaryAppColor,
-                                          fontSize: heightValue25,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                  ),
+                             CircleAvatar(
+                                  radius: heightValue25,
+                                  backgroundImage: user.fullname.isNotEmpty
+                                      ? AssetImage(gradientCircle)
+                                      : null, // Set to null or provide a fallback image if fullname is empty
+                                  child: user.fullname.isNotEmpty
+                                      ? Center(
+                                          child: Text(
+                                            user.fullname[0],
+                                            style: TextStyle(
+                                              color: secondaryAppColor,
+                                              fontSize: heightValue25,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        )
+                                      : null, // Set to null or provide a fallback widget if fullname is empty
+                                ),
+
                                   SizedBox(
                                     width: value10,
                                   ),
@@ -170,13 +175,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Hi, ${user.fullname}",
-                                        style: TextStyle(
-                                          color: whiteColor,
-                                          fontSize: heightValue18,
-                                          fontWeight: FontWeight.bold,
+                                          user.fullname.isNotEmpty
+                                              ? "Hi, ${user.fullname}"
+                                              : "Hi there!", // Provide a default value or handle it accordingly
+                                          style: TextStyle(
+                                            color: whiteColor,
+                                            fontSize: heightValue18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
+
                                       Text(
                                         "@ ${user.username}",
                                         overflow: TextOverflow.ellipsis,
@@ -212,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 Text(
-                                  "₦ ${amountFormatter.format(balance)}",
+                                  "K ${amountFormatter.format(balance)}",
                                   style: TextStyle(
                                     color: whiteColor,
                                     fontSize: heightValue50,

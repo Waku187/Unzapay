@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:pay_mobile_app/core/utils/assets.dart';
 import 'package:pay_mobile_app/core/utils/global_constants.dart';
+import 'package:pay_mobile_app/features/auth/screens/login_screen.dart';
 import 'package:pay_mobile_app/features/auth/services/auth_service.dart';
 import 'package:pay_mobile_app/features/auth/providers/user_provider.dart';
 import 'package:pay_mobile_app/widgets/height_space.dart';
+import 'package:pay_mobile_app/widgets/main_app.dart';
 import 'package:pay_mobile_app/widgets/number_dial_pad.dart';
 import 'package:pay_mobile_app/widgets/pin_input_field.dart';
 import 'package:pay_mobile_app/widgets/width_space.dart';
@@ -63,20 +65,29 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
   }
 
   addDigitForConfirm(int digit) {
-    if (confirmPin.length > 3) {
-      //createPinUser();
-      return;
-    }
+    // if (confirmPin.length <= 3) {
+    //   //createPinUser();
+    //   return;
+    // }
 
     setState(() {
       confirmPin = confirmPin + digit.toString();
       print('Confirm pin is $confirmPin');
       selectedindex = confirmPin.length;
-      if (confirmPin.length > 3) {
-        createPinUser();
-        getUserData();
-      }
     });
+    if (confirmPin.length > 3) {
+      print("Here");
+      createPinUser();
+      getUserData();
+      final userProvider =
+          Provider.of<UserProvider>(context, listen: false).user;
+      print(userProvider.username);
+      // Navigator.pushNamedAndRemoveUntil(
+      //     context, MainApp.route, (route) => false,
+      //     arguments: 0);
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => LoginScreen()));
+    }
   }
 
   backspaceForConfirm() {
@@ -132,7 +143,7 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                   ),
                 ),
                 HeightSpace(heightValue10),
-                pin.length > 3
+                pin.length == 4
                     ? Text(
                         "Confirm your 4 digit pin",
                         style: TextStyle(fontSize: heightValue23),
@@ -142,7 +153,7 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                         style: TextStyle(fontSize: heightValue22),
                       ),
                 HeightSpace(heightValue30),
-                pin.length > 3
+                pin.length == 4
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

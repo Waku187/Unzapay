@@ -149,6 +149,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             CustomButton(
                               buttonText: "Yes",
                               onTap: () {
+                                Provider.of<UserProvider>(context,
+                                        listen: false)
+                                    .clear();
+                                print(Provider.of<UserProvider>(context,
+                                        listen: false)
+                                    .user
+                                    .username);
                                 logOut();
                               },
                               buttonColor: primaryAppColor,

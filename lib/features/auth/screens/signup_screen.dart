@@ -14,6 +14,10 @@ import 'package:pay_mobile_app/widgets/custom_textfield.dart';
 import 'package:pay_mobile_app/widgets/height_space.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/utils/utils.dart';
+import '../../../widgets/main_app.dart';
+import '../providers/user_provider.dart';
+
 class SignUpScreen extends StatefulWidget {
   static const route = '/signup-screen';
   const SignUpScreen({super.key});
@@ -61,6 +65,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           password: passwordController.text,
           onSignUpSuccess: () async {
             print("Sign Up Success");
+            // namedNav(
+            //   context,
+            //   SignUpVerificationScreen.route,
+            // );
+            /* otp was not working, result = commented out
             authService.sendOtp(
               context: context,
               email: emailController.text,
@@ -69,13 +78,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 context,
                 SignUpVerificationScreen.route,
               ),
-            );
+
+          );
+          */
+
             authProvider.setUserEmail(emailController.text);
+            /* namedNav(
+              context,
+              SignUpVerificationScreen.route,
+            ); */
+            final userProvider =
+                Provider.of<UserProvider>(context, listen: false).user;
+
+            userProvider.isVerified == true
+                ? Navigator.pushNamedAndRemoveUntil(
+                    context, MainApp.route, (route) => false, arguments: 0)
+                : Navigator.pushNamedAndRemoveUntil(
+                    context, MainApp.route, (route) => false,
+                    arguments: 0);
           },
         );
       } else {
         setState(() {
-          misMatchPasswordErrorText = "Passwords Do not Match";
+          misMatchPasswordErrorText = "Passwords Do not Match Wechipondo";
         });
       }
     }
@@ -117,7 +142,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Padding(
                         padding: EdgeInsets.only(right: value20),
                         child: Text(
-                          "Signup and start transfering",
+                          "Signup",
                           style: TextStyle(
                             fontSize: heightValue37,
                             fontWeight: FontWeight.w900,

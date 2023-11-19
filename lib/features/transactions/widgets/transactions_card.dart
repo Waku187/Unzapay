@@ -100,7 +100,7 @@ class TransactionsCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "₦${amountFormatter.format(amount)}",
+                        "K${amountFormatter.format(amount)}",
                         style: TextStyle(
                           color: amountColorBasedOnTransactionType,
                           fontSize: heightValue20,

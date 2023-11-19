@@ -103,6 +103,7 @@ class _MyAppState extends State<MyApp> {
       theme: themeManager.darkTheme,
       darkTheme: themeManager.darkTheme,
       debugShowCheckedModeBanner: false,
+      
       onGenerateRoute: (settings) => appRoutes(settings),
       home: FutureBuilder(
         future: _future,

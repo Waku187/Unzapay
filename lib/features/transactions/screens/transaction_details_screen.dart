@@ -149,7 +149,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                   isAmount: true,
                   label: "Amount",
                   content:
-                      "${transactions.trnxType == "Debit" ? "- " : "+ "}₦${amountFormatter.format(transactions.amount)}",
+                      "${transactions.trnxType == "Debit" ? "- " : "+ "}K${amountFormatter.format(transactions.amount)}",
                   amountColor: transactions.trnxType == "Debit"
                       ? Colors.red
                       : Colors.green,

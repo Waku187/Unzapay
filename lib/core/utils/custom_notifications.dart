@@ -8,9 +8,9 @@ class CustomNotifications {
       [
         NotificationChannel(
           playSound: true,
-          channelKey: 'Pay Mobile',
-          channelName: 'Pay Mobile',
-          channelDescription: 'Notification channel for Pay Mobile',
+          channelKey: 'Unza Pay',
+          channelName: 'Unza Pay',
+          channelDescription: 'Notification channel for Unza Pay',
           //defaultColor: primaryAppColor,
           //ledColor: const Color(0xFF9D50DD),
           importance: NotificationImportance.High,
@@ -27,7 +27,7 @@ class CustomNotifications {
       await AwesomeNotifications().createNotification(
         content: NotificationContent(
           id: 0,
-          channelKey: 'Pay Mobile',
+          channelKey: 'Unza Pay',
           title: message.notification?.title,
           body: message.notification?.body,
           largeIcon: "asset://assets/images/notifications_logo.png",

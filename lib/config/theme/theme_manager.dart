@@ -3,7 +3,7 @@ import 'package:pay_mobile_app/core/utils/color_constants.dart';
 
 class ThemeManager {
   final darkTheme = ThemeData(
-    fontFamily: 'Comfortaa',
+    fontFamily: 'Roboto',
     useMaterial3: true,
     colorScheme: const ColorScheme.dark(
       primary: primaryAppColor,

@@ -52,9 +52,11 @@ class _LoginScreenState extends State<LoginScreen> {
               Provider.of<AuthProvider>(context, listen: false);
           userProvider.isVerified == true
               ? Navigator.pushNamedAndRemoveUntil(
+                  context, MainApp.route, (route) => false, arguments: 0)
+              : Navigator.pushNamedAndRemoveUntil(
                   context, MainApp.route, (route) => false,
-                  arguments: 0)
-              : authService.sendOtp(
+                  arguments:
+                      0); /* authService.sendOtp(
                   context: context,
                   email: userProvider.email,
                   sendPurpose: 'sign-up-verification',
@@ -62,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     context,
                     SignUpVerificationScreen.route,
                   ),
-                );
+                ); */
           authProvider.setUserEmail(userProvider.email);
         },
       );
@@ -87,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Padding(
                         padding: EdgeInsets.only(right: value20),
                         child: Text(
-                          "Login and start transfering",
+                          "Login",
                           style: TextStyle(
                             fontSize: heightValue35,
                             fontWeight: FontWeight.w900,
