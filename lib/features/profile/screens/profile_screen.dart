@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:pay_mobile_app/core/utils/color_constants.dart';
 import 'package:pay_mobile_app/core/utils/global_constants.dart';
@@ -27,7 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void createChat() {
     final userProvider = Provider.of<UserProvider>(context, listen: false).user;
-    print(userProvider.username);
+    log(userProvider.username);
     profileServices.createChat(
       context: context,
       sender: userProvider.username,
@@ -152,7 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Provider.of<UserProvider>(context,
                                         listen: false)
                                     .clear();
-                                print(Provider.of<UserProvider>(context,
+                                log(Provider.of<UserProvider>(context,
                                         listen: false)
                                     .user
                                     .username);

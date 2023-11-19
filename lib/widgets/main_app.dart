@@ -10,8 +10,8 @@ import 'package:pay_mobile_app/features/transactions/screens/all_transactions_sc
 
 class MainApp extends StatefulWidget {
   static const String route = '/main-app';
-  int currentPage;
-  MainApp({
+ late final int currentPage;
+   MainApp({
     Key? key,
     this.currentPage = 0,
   }) : super(key: key);

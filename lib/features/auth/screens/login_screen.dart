@@ -5,7 +5,6 @@ import 'package:pay_mobile_app/core/utils/global_constants.dart';
 import 'package:pay_mobile_app/core/utils/assets.dart';
 import 'package:pay_mobile_app/features/auth/screens/forgort_password_screen.dart';
 import 'package:pay_mobile_app/features/auth/screens/signup_screen.dart';
-import 'package:pay_mobile_app/features/auth/screens/signup_verification_screen.dart';
 import 'package:pay_mobile_app/features/auth/services/auth_service.dart';
 import 'package:pay_mobile_app/features/auth/providers/auth_provider.dart';
 import 'package:pay_mobile_app/features/auth/providers/user_provider.dart';

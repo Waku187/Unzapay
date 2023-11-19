@@ -151,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                              CircleAvatar(
                                   radius: heightValue25,
                                   backgroundImage: user.fullname.isNotEmpty
-                                      ? AssetImage(gradientCircle)
+                                      ?const AssetImage(gradientCircle)
                                       : null, // Set to null or provide a fallback image if fullname is empty
                                   child: user.fullname.isNotEmpty
                                       ? Center(

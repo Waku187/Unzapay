@@ -1,11 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:pay_mobile_app/config/routes/custom_push_navigators.dart';
 import 'package:pay_mobile_app/core/utils/color_constants.dart';
 import 'package:pay_mobile_app/core/utils/global_constants.dart';
 import 'package:pay_mobile_app/core/utils/assets.dart';
 import 'package:pay_mobile_app/core/utils/validators.dart';
 import 'package:pay_mobile_app/features/auth/screens/login_screen.dart';
-import 'package:pay_mobile_app/features/auth/screens/signup_verification_screen.dart';
 import 'package:pay_mobile_app/features/auth/services/auth_service.dart';
 import 'package:pay_mobile_app/features/auth/providers/auth_provider.dart';
 import 'package:pay_mobile_app/widgets/custom_app_bar.dart';
@@ -14,7 +14,6 @@ import 'package:pay_mobile_app/widgets/custom_textfield.dart';
 import 'package:pay_mobile_app/widgets/height_space.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/utils/utils.dart';
 import '../../../widgets/main_app.dart';
 import '../providers/user_provider.dart';
 
@@ -64,7 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           email: emailController.text,
           password: passwordController.text,
           onSignUpSuccess: () async {
-            print("Sign Up Success");
+            log("Sign Up Success");
             // namedNav(
             //   context,
             //   SignUpVerificationScreen.route,

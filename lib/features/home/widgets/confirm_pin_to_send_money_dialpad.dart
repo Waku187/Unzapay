@@ -1,8 +1,8 @@
-// ignore_for_file: avoid_print
+
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:local_auth/error_codes.dart' as auth_error;
 import 'package:pay_mobile_app/core/utils/assets.dart';
 import 'package:pay_mobile_app/core/utils/color_constants.dart';
 import 'package:pay_mobile_app/widgets/height_space.dart';
@@ -49,7 +49,7 @@ class _ConfirmPinToSendMoneyDialPadState
     }
     setState(() {
       pin = pin + digit.toString();
-      print('pin is $pin');
+      log('pin is $pin');
       selectedindex = pin.length;
       if (pin.length > 3) {
         confirmTransactionUsingPinOrBiometrics();
@@ -89,7 +89,7 @@ class _ConfirmPinToSendMoneyDialPadState
         _onSuccess();
       }
     } catch (e) {
-      print('Error during biometric authentication: $e');
+      log('Error during biometric authentication: $e');
     }
       
     } else {
@@ -239,7 +239,7 @@ class _ConfirmPinToSendMoneyDialPadState
                     ),
 
                     TextButton(
-                      
+
                       style: ButtonStyle(
                         fixedSize: MaterialStateProperty.all(
                           Size(heightValue75, heightValue75),

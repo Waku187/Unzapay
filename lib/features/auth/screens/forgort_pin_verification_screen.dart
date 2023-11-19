@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:pay_mobile_app/config/routes/custom_push_navigators.dart';
@@ -53,12 +54,12 @@ class _ForgortPinVerificationScreenState
           fourthNumberController.text +
           fifthNumberController.text +
           sixthNumberController.text;
-      print(otpCode);
+      log(otpCode);
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      print(authProvider.emailAddress);
+      log(authProvider.emailAddress?? 'email not set');
       authService.verifyOtp(
         context: context,
-        email: authProvider.emailAddress ?? "",
+        email: authProvider.emailAddress ?? "email not set",
         otpCode: otpCode,
         onSuccessButtonTap: () => namedNav(
           context,

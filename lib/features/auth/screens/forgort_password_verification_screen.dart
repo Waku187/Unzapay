@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:developer';
+
 
 import 'package:flutter/material.dart';
 import 'package:pay_mobile_app/config/routes/custom_push_navigators.dart';
@@ -53,7 +55,7 @@ class _ForgortPasswordVerificationScreenState
           fourthNumberController.text +
           fifthNumberController.text +
           sixthNumberController.text;
-      print(otpCode);
+      log(otpCode);
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
       authService.verifyOtp(
         context: context,

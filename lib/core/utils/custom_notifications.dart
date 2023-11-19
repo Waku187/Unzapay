@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -20,8 +22,8 @@ class CustomNotifications {
     );
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      print('..................onMessage...................');
-      print(
+      log('..................onMessage...................');
+      log(
           'onMessage: ${message.notification?.title}/${message.notification?.body}');
 
       await AwesomeNotifications().createNotification(
@@ -50,12 +52,12 @@ class CustomNotifications {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission');
+      log('User granted permission');
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
-      print('User granted provisional permission');
+      log('User granted provisional permission');
     } else {
-      print("User declined or has accepted permission");
+      log("User declined or has accepted permission");
     }
   }
 }

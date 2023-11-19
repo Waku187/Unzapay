@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:pay_mobile_app/core/utils/global_constants.dart';
 import 'package:pay_mobile_app/features/profile/models/message_model.dart';
@@ -9,7 +10,7 @@ import 'package:pay_mobile_app/features/profile/widgets/senders_message_card.dar
 import 'package:pay_mobile_app/features/auth/providers/user_provider.dart';
 import 'package:pay_mobile_app/widgets/custom_textfield.dart';
 import 'package:provider/provider.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart 'as IO;
 
 class ChatScreen extends StatefulWidget {
   static const String route = "/chat-screen";
@@ -30,7 +31,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     final chatProvider = Provider.of<ChatProvider>(context, listen: false);
-    print(chatProvider.chat.id);
+    log(chatProvider.chat.id);
     messageController = TextEditingController();
     scrollController = ScrollController();
     socket = IO.io(uri, <String, dynamic>{
@@ -43,7 +44,7 @@ class _ChatScreenState extends State<ChatScreen> {
     socket.emit('join', {'chatId': chatProvider.chat.id});
     socket.on('message', (data) {
       streamController.add([MessageModel.fromJson(data)]);
-      print(streamController);
+      log(streamController.toString());
     });
     loadMessages();
     // Future.delayed(Duration.zero, () {
